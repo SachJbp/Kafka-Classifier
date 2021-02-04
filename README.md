@@ -30,7 +30,7 @@ X_test = X_test.reshape((X_test.shape[0], 28, 28, 1))
 MIC.TrainClassifier(X_train,y_train, X_test, y_test,10,labels).Train()
 ```
 
-Note: The model is saved at 'generator/trained_model' in h5 format with the name 'model.h5'. The test set and the labels are saved as numpy matrix at 'generator/test_set' with names 'test_set.npy' and 'labels.npy' respectively.
+Note: The model is saved at 'generator/trained_model' in h5 format with the name 'model.h5'. The test set and the labels are saved as numpy matrices at 'generator/test_set' with names 'test_set.npy' and 'labels.npy' respectively.
 
 
 ## Kafka Stream Classifier
