@@ -14,51 +14,80 @@ from keras.models import load_model
 import cv2
 
 class CNN:
-  @staticmethod
-  def build(height, width, depth, classes):
-    # initialize the model along with the input shape
-    # to be "channels last" and the channels dimension itself
-    model = Sequential()
-    inputShape = (height, width, depth)
-    chanDim = -1
-      
-    # 1st CONV -> RELU -> CONV -> RELU -> POOL layer set
-    model.add(Conv2D(32, (3,3), padding='same', input_shape=inputShape))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization(axis=chanDim))
-    model.add(Conv2D(32, (3,3), padding='same'))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization(axis=chanDim))
-    model.add(MaxPooling2D(pool_size=(2,2)))
-    model.add(Dropout(0.25))
+    """Builds a CNN Model 
+     
+    Args:
+      height (int): Height of input images
+      width (int): Width of input images
+      depth (int): Number of Channels
     
-    # 2nd CONV -> RELU -> CONV -> RELU -> POOL layer set
-    model.add(Conv2D(64, (3,3), padding='same', input_shape=inputShape))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization(axis=chanDim))
-    model.add(Conv2D(64, (3,3), padding='same'))
-    model.add(Activation('relu'))
-    model.add(BatchNormalization(axis=chanDim))
-    model.add(MaxPooling2D(pool_size=(2,2)))
-    model.add(Dropout(0.25))
+    Returns:
+      Model : Keras model
+    """  
     
-    # 1st (and only) set of FC => RELU layers
-    model.add(Flatten())
-    model.add(Dense(512))
-    model.add(Activation("relu"))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.25))
-    
-    # softmax classifier
-    model.add(Dense(classes))
-    model.add(Activation("softmax"))
-    
-    # return the constructed network architecture
+    @staticmethod
+    def build(height, width, depth, classes):
+      # initialize the model along with the input shape
+      # to be "channels last" and the channels dimension itself
+      model = Sequential()
+      inputShape = (height, width, depth)
+      chanDim = -1
 
-    return model
+      # 1st CONV -> RELU -> CONV -> RELU -> POOL layer set
+      model.add(Conv2D(32, (3,3), padding='same', input_shape=inputShape))
+      model.add(Activation('relu'))
+      model.add(BatchNormalization(axis=chanDim))
+      model.add(Conv2D(32, (3,3), padding='same'))
+      model.add(Activation('relu'))
+      model.add(BatchNormalization(axis=chanDim))
+      model.add(MaxPooling2D(pool_size=(2,2)))
+      model.add(Dropout(0.25))
+
+      # 2nd CONV -> RELU -> CONV -> RELU -> POOL layer set
+      model.add(Conv2D(64, (3,3), padding='same', input_shape=inputShape))
+      model.add(Activation('relu'))
+      model.add(BatchNormalization(axis=chanDim))
+      model.add(Conv2D(64, (3,3), padding='same'))
+      model.add(Activation('relu'))
+      model.add(BatchNormalization(axis=chanDim))
+      model.add(MaxPooling2D(pool_size=(2,2)))
+      model.add(Dropout(0.25))
+
+      # 1st (and only) set of FC => RELU layers
+      model.add(Flatten())
+      model.add(Dense(512))
+      model.add(Activation("relu"))
+      model.add(BatchNormalization())
+      model.add(Dropout(0.25))
+
+      # softmax classifier
+      model.add(Dense(classes))
+      model.add(Activation("softmax"))
+
+      # return the constructed network architecture
+
+      return model
 
 
 class TrainClassifier:
+    """To train the CNN based classifier
+    
+    Args:
+        X_train (numpy matrix): Training data inputs
+        y_train (numpy matrix): Training data labels
+        X_test (numpy matrix): Test Data inputs
+        y_Test (numpy matrix): Test data labels
+        n_classes (int): Number of Labels
+        labelNames (List): Label or class names 
+        
+    Attributes:
+        X_train (numpy matrix): Training data inputs
+        y_train (numpy matrix): Training data labels
+        X_test (numpy matrix): Test Data inputs
+        y_Test (numpy matrix): Test data labels
+        n_classes (int): Number of Labels
+        labelNames (List): Label or class names 
+    """
     def __init__(self, X_train, y_train, X_test, y_test, n_classes, labelNames):
         self.X_train = X_train
         self.y_train = y_train
@@ -68,6 +97,12 @@ class TrainClassifier:
         self.labelNames = labelNames
 
     def Train(self):
+        """Train the CNN based classifier 
+        The hyperparameters are fixed for now
+        
+        Returns:
+            model: Trained keras model
+        """
         
         # Initialize EPOCHS, LR_RATE, BATCH_SIZE
         NUM_EPOCHS = 5
