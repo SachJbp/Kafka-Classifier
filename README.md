@@ -19,7 +19,7 @@ import numpy as np
 labels = ["top", "trouser", "pullover", "dress", "coat", "sandal", "shirt", "sneaker", "bag", "ankle boot"]
 ```
 
-- Reshape the training matrices in the following format:(number of samples, height, width, channels)
+- Reshape the training matrices in the following format: (number of samples, height, width, channels)
 ```python
 X_train = X_train.reshape((X_train.shape[0], 28, 28, 1))
 X_test = X_test.reshape((X_test.shape[0], 28, 28, 1)) 
