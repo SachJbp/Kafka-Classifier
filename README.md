@@ -13,9 +13,10 @@ from keras.datasets import fashion_mnist
 import numpy as np
 ```
 
-- Load the dataset
+- Load the dataset and labels
 ```python
 (X_train, y_train), (X_test, y_test) = fashion_mnist.load_data()
+labels = ["top", "trouser", "pullover", "dress", "coat", "sandal", "shirt", "sneaker", "bag", "ankle boot"]
 ```
 
 - Reshape the training matrices in the following format:(number of samples, height, width, channels)
