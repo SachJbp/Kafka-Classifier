@@ -10,8 +10,9 @@ from keras.optimizers import SGD, Adam, Adadelta
 from keras.utils import np_utils
 from imutils import build_montages
 import numpy as np
-from keras.models import load_model 
 import cv2
+from keras.models import load_model 
+
 
 class CNN:
     """Builds a CNN Model 
